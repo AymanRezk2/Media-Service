@@ -936,6 +936,7 @@ main {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
 }
 
 .video-modal__dialog {
@@ -972,14 +973,45 @@ main {
   padding: 0 0.25rem;
 }
 
+/* ---- الفيديو ---- */
 .video-modal__body {
   background: #000;
+  width: 100%;
 }
 
 .video-modal__player {
   width: 100%;
+  aspect-ratio: 16 / 9;
   display: block;
-  max-height: 70vh;
+  border: 0;
+  background: #000;
+}
+
+/* fallback للمتصفحات القديمة */
+@supports not (aspect-ratio: 16 / 9) {
+  .video-modal__body {
+    position: relative;
+    padding-top: 56.25%;
+  }
+  .video-modal__player {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* موبايل */
+@media (max-width: 600px) {
+  .video-modal {
+    padding: 0.5rem;
+  }
+  .video-modal__title {
+    font-size: 0.95rem;
+  }
+  .video-modal__close {
+    font-size: 1.5rem;
+  }
 }
 
 /* ---- Footer ---- */

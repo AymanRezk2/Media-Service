@@ -404,21 +404,27 @@ function initVideoModal() {
           <button type="button" class="video-modal__close" data-close-modal aria-label="إغلاق">&times;</button>
         </div>
         <div class="video-modal__body">
-          <video controls playsinline class="video-modal__player"></video>
+          <iframe
+            class="video-modal__player"
+            src=""
+            title=""
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>`;
     document.body.appendChild(modal);
   }
 
-  const player = modal.querySelector('video');
+  const player = modal.querySelector('iframe');   // ← iframe مش video
   const titleEl = modal.querySelector('.video-modal__title');
   let lastTrigger = null;
 
   function closeModal() {
     modal.hidden = true;
-    player.pause();
-    player.removeAttribute('src');
-    player.load();
+    player.src = '';              // ← مسح الـ src يوقف الفيديو
     document.body.style.overflow = '';
     lastTrigger?.focus();
   }
@@ -428,6 +434,7 @@ function initVideoModal() {
     lastTrigger = document.activeElement;
     titleEl.textContent = title;
     player.src = src;
+    player.title = title || 'فيديو الشرح';
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
     player.focus();
